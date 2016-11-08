@@ -1,7 +1,7 @@
 $(document).ready(function(){
-	$("#includeHeader").load("static/header.htm");
-	$("#includeFooter").load("static/footer.htm");
-	$("#includeLeftPanel").load("static/leftPanel.htm");
+	$("#includeHeader").load("../views/static/header.htm");
+	$("#includeFooter").load("../views/static/footer.htm");
+	$("#includeLeftPanel").load("../views/static/leftPanel.htm");
 	var token=$("meta[name='_csrf']").attr("content");
 	var header=$("meta[name='_csrf_header']").attr("content");
 	
