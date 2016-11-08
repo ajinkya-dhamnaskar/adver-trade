@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<div class="overlay connectedSortable hide"></div>
+	<div class="overlay-body connectedSortable hide">
+		<div class="file-name-header adjust-header-text">
+			<!-- <div class="tab-close">
+				<i class="btn-close fa fa-angle-right"></i>
+			</div> -->
+			<div class="row popup-header-text">
+				<div class="col-md-12">
+					<button id="close"
+						class="btn btn-left btn-primary btn-group btn-action-margin-left info"
+						data-placement="bottom" title="Close">
+						<i class="fa fa-long-arrow-right"></i>
+					</button>
+					<label class="vertical-align-bottom overlay-header">Create
+						Job</label>
+				</div>
+				<hr>
+				<form class="navbar-form1" id="submitad" action="submitad.htm"
+					method="POST" enctype="multipart/form-data" onsubmit="validate()">
+
+					<div class="box-body">
+						<div class="fileupload-buttonbar">
+							<div class="col-sm-12">
+
+								<div class="row">
+									<div class="col-sm-12">
+										<div class="form-group">
+
+											<label>Ad Title :</label> <input type="text"
+												class="form-control validation-field" name="adTitle"
+												id="adTitle" placeholder="Enter">
+										</div>
+										<div class="form-group">
+
+											<label>Price :</label> <input type="text"
+												class="form-control validation-field" name="price"
+												id="price" placeholder="Enter">
+										</div>
+
+										<div class="form-group">
+											<label>Category</label> <select class="form-control"
+												name="hostType" id="hostType" placeholder="Select JobType">
+												<option value="" disabled selected>Select</option>
+												<option value="${ITEM_BOOKS}">Books</option>
+												<option value="${ITEM_MOTORS}">Cars and Motors</option>
+												<option value="${ITEM_ELECTRONICS}">Electronics</option>
+												<option value="${ITEM_FASHION}">Fashion and
+													Accessories</option>
+												<option value="${ITEM_FURNITURE}">Furniture</option>
+												<option value="${ITEM_HOUSEHOLD}">Household</option>
+												<option value="${ITEM_JOBS}">Jobs</option>
+												<option value="${ITEM_SPORTS}">Sports</option>
+											</select>
+										</div>
+
+										<div id="uploadimg" class="row">
+											<div class="col-sm-3">
+												<div class="form-group">
+													<input type="file" name="file" />
+												</div>
+											</div>
+										</div>
+										<div class="form-group">
+											<label>Ad Description:</label>
+											<!-- <input type="text" -->
+											<!-- class="form-control" name="jobType" id="jobType" placeholder="Enter"> -->
+											<textarea id="description-field" rows="5" type="text"
+												name="description" ng-model="ad.description"
+												placeholder="Enter Description .." ng-maxlength="1500"
+												class="form-control ng-pristine ng-untouched ng-valid ng-valid-maxlength"></textarea>
+										</div>
+
+										<div class="form-group">
+											<div class="validation-message error hide"></div>
+										</div>
+									</div>
+								</div>
+
+
+
+								<button type="submit" class="btn btn-primary start" id="submit">
+									<i class="icon-upload icon-white"></i> <span>Submit Job</span>
+								</button>
+
+							</div>
+							<br>
+							<div class="fileupload-progress">
+								<div class="box-body no-padding">
+									<div class="bulk-upload-row">
+										<div class="col-sm-12">
+											<div role="presentation" id="fileupload-tables">
+												<div class="files" data-toggle="modal-gallery"
+													data-target="#modal-gallery"></div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+
+						</div>
+					</div>
+
+
+
+
+
+
+				</form>
+			</div>
+			<span id="message"></span>
+		</div>
+		<br />
+
+	</div>
+</body>
+</html>
