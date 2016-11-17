@@ -1,27 +1,26 @@
 /* Overlay CSS Start */
-.overlay{
+.overlay {
 	height: 100%;
 	background-color: #000;
-	opacity : 0.3;
+	opacity: 0.3;
 	filter: alpha(opacity = 30);
 	position: fixed;
 	z-index: 1132;
 	width: 100%;
-	
 }
 
-.overlay-body{
+.overlay-body {
 	background-color: #ecf0f5;
 	height: 100%;
 	width: 80%;
-	z-index: 1133;	
+	z-index: 1133;
 	position: fixed;
-	left: 100%;	
-	overflow: auto;	
+	left: 100%;
+	overflow: auto;
 	bottom: 0px;
 }
 
-.tab-close{
+.tab-close {
 	height: 60px;
 	width: 45px;
 	background-image: url("../../img/tab-first.png");
@@ -34,7 +33,7 @@
 	top: 0px;
 }
 
-.btn-close{
+.btn-close {
 	position: relative;
 	left: 22px;
 	top: 22px;
@@ -42,68 +41,75 @@
 /* Overlay CSS End */
 
 /* Overlay Header Start */
-
-.file-name-header{
+.file-name-header {
 	position: fixed;
 	border-bottom: 1px solid #eee;
 	box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
-/* 	padding: 15px 0px 10px 20px; */
-/* 	margin: 0 0 10px 0; */
+	/* 	padding: 15px 0px 10px 20px; */
+	/* 	margin: 0 0 10px 0; */
 	z-index: 1;
 	width: 80%;
 	background: #FBFBFB;
 	opacity: 0.95;
 	filter: alpha(opacity = 95)
 }
-.popup-header-text{
+
+.popup-header-text {
 	font-size: 17px;
-/* 	color: #2a6496; */
+	/* 	color: #2a6496; */
 }
-.overlay-body > ul{
+
+.overlay-body>ul {
 	top: 65px;
 	margin-left: 15px;
 }
 
-.timeline > .time-label{
+.timeline>.time-label {
 	cursor: pointer;
 }
 
-.overlay-content{
+.overlay-content {
 	margin-top: 55px;
 }
 
-.display-none{
+.display-none {
 	display: none;
 }
 
-.centered{
+.centered {
 	text-align: center;
 }
 
-.padding-top{
+.padding-top {
 	padding-top: 15px;
 }
 
-.label-margin{
+.label-margin {
 	margin: 0 2px;
 }
 
-.adjust-header-text{
+.adjust-header-text {
 	margin: 0px 5px 6px 0px;
 }
 
-.vertical-align-bottom{
+.vertical-align-bottom {
 	vertical-align: bottom;
 }
-.overlay-file-name-div{
+
+.overlay-file-name-div {
 	margin-top: 50px
 }
-.overlay-file-name-text{
+
+.overlay-file-name-text {
 	padding: 10px 0px 0px 15px;
 	font-size: 16px
 }
 
-.overlay-header-btn-margin-right{
+.navbar-form1 {
+	font-size: 13px;
+}
+
+.overlay-header-btn-margin-right {
 	margin-right: 20px;
 }
 /* Overlay Header End */

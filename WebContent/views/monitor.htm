@@ -11,7 +11,8 @@
 	name="viewport">
 <link rel="import" href="static/header.htm">
 <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="../css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css"
+	href="../css/font-awesome.min.css">
 <link rel="stylesheet" type="text/css"
 	href="../css/daterangepicker/daterangepicker-bs3.css" />
 <link rel="stylesheet" type="text/css"
@@ -42,9 +43,102 @@
 						data-placement="bottom" title="Close">
 						<i class="fa fa-long-arrow-right"></i>
 					</button>
-					<label class="vertical-align-bottom ovelay-header">Create
+					<label class="vertical-align-bottom overlay-header">Create
 						Job</label>
 				</div>
+				<hr>
+				<form class="navbar-form1" id="submitad" action="submitad.htm"
+					method="POST" enctype="multipart/form-data" onsubmit="validate()">
+
+					<div class="box-body">
+						<div class="fileupload-buttonbar">
+							<div class="col-sm-12">
+
+								<div class="row">
+									<div class="col-sm-12">
+										<div class="form-group">
+
+											<label>Ad Title :</label> <input type="text"
+												class="form-control validation-field" name="adTitle"
+												id="adTitle" placeholder="Enter">
+										</div>
+										<div class="form-group">
+
+											<label>Price :</label> <input type="text"
+												class="form-control validation-field" name="price"
+												id="price" placeholder="Enter">
+										</div>
+
+										<div class="form-group">
+											<label>Category</label> <select class="form-control"
+												name="hostType" id="hostType" placeholder="Select JobType">
+												<option value="" disabled selected>Select</option>
+												<option value="${ITEM_BOOKS}">Books</option>
+												<option value="${ITEM_MOTORS}">Cars and Motors</option>
+												<option value="${ITEM_ELECTRONICS}">Electronics</option>
+												<option value="${ITEM_FASHION}">Fashion and
+													Accessories</option>
+												<option value="${ITEM_FURNITURE}">Furniture</option>
+												<option value="${ITEM_HOUSEHOLD}">Household</option>
+												<option value="${ITEM_JOBS}">Jobs</option>
+												<option value="${ITEM_SPORTS}">Sports</option>
+											</select>
+										</div>
+
+										<div id="uploadimg" class="row">
+											<div class="col-sm-3">
+												<div class="form-group">
+													<input type="file" name="file" />
+												</div>
+											</div>
+										</div>
+										<div class="form-group">
+											<label>Ad Description:</label>
+											<!-- <input type="text" -->
+											<!-- class="form-control" name="jobType" id="jobType" placeholder="Enter"> -->
+											<textarea id="description-field" rows="5" type="text"
+												name="description" ng-model="ad.description"
+												placeholder="Enter Description .." ng-maxlength="1500"
+												class="form-control ng-pristine ng-untouched ng-valid ng-valid-maxlength"></textarea>
+										</div>
+
+										<div class="form-group">
+											<div class="validation-message error hide"></div>
+										</div>
+									</div>
+								</div>
+
+
+
+								<button type="submit" class="btn btn-primary start" id="submit">
+									<i class="icon-upload icon-white"></i> <span>Submit Job</span>
+								</button>
+
+							</div>
+							<br>
+							<div class="fileupload-progress">
+								<div class="box-body no-padding">
+									<div class="bulk-upload-row">
+										<div class="col-sm-12">
+											<div role="presentation" id="fileupload-tables">
+												<div class="files" data-toggle="modal-gallery"
+													data-target="#modal-gallery"></div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+
+						</div>
+					</div>
+
+
+
+
+
+
+				</form>
 			</div>
 			<span id="message"></span>
 		</div>
@@ -57,15 +151,18 @@
 		<!-- <jsp:include page="static/leftPanel.htm"></jsp:include> -->
 		<div id="includeLeftPanel"></div>
 		<aside class="right-side"> <section class="content-header">
-		<br/>
-		<h1>Jobs &nbsp;&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-primary open-overlay">Create
-			Job</button>&nbsp;&nbsp;&nbsp;&nbsp;<button type="button" id = "refreshTable" class="btn btn-primary">Refresh
-			</button></h1>
+		<br />
+		<h1>
+			Jobs &nbsp;&nbsp;&nbsp;&nbsp;
+			<button type="button" class="btn btn-primary open-overlay">Create
+				Job</button>
+			&nbsp;&nbsp;&nbsp;&nbsp;
+			<button type="button" id="refreshTable" class="btn btn-primary">Refresh
+			</button>
+		</h1>
 		<div id="message" class="error hide"></div>
 		<ol class="breadcrumb">
-			<li><a href="test.htm"
-				><i
-					class="fa fa-dashboard"></i> Home</a></li>
+			<li><a href="test.htm"><i class="fa fa-dashboard"></i> Home</a></li>
 			<li class="active">Jobs</li>
 		</ol>
 		</section> <section class="content">
@@ -114,8 +211,8 @@
 						<p>Electronics</p>
 					</div>
 					<div class="icon">
-					<!-- <img src="../img/electronics.jpeg" class="" alt="Logo Image" /> -->
-						 <i class="fa fa-clock-o"></i>
+						<!-- <img src="../img/electronics.jpeg" class="" alt="Logo Image" /> -->
+						<i class="fa fa-clock-o"></i>
 					</div>
 					<a href="#" class="small-box-footer"> More info <i
 						class="fa fa-arrow-circle-right"></i>
@@ -190,7 +287,7 @@
 		</div>
 	</div>
 	<!-- Alert Modal end  -->
-	
+
 	<div id="includeFooter"></div>
 
 	<script type="text/javascript" src="../js/bootstrap.min.js"></script>
@@ -208,11 +305,12 @@
 	<script type="text/javascript" src="../js/jquery.confirm.min.js"></script>
 	<script type="text/javascript" src="../js/fnStandingRedraw.js"></script>
 	<script type="text/javascript" src="../js/jquery.blockui.js"></script>
-	
+
 	<script type="text/javascript" src="../js/custom/monitorJob.js"></script>
 	<script type="text/javascript" src="../js/common.js"></script>
 	<script type="text/javascript" src="../js/custom/encrypt.js"></script>
 
-	<script type="text/javascript" src="../js/custom/detectmobilebrowser.js"></script>
+	<script type="text/javascript"
+		src="../js/custom/detectmobilebrowser.js"></script>
 </body>
 </html>
