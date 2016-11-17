@@ -1182,3 +1182,15 @@ th, td {
 .avatar-bg-color{
 	background-color: #d8cdbb;
 }
+
+.little-margin{
+	margin: 10px 0 ;
+}
+
+.testimonial-div{
+	border: 1px solid #E0E0E0;
+    border-radius: 5px;
+    padding: 5px;
+    background-color: rgba(255, 188, 0, 0.22);
+
+}

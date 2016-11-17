@@ -9,7 +9,6 @@
 <meta
 	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
 	name="viewport">
-<link rel="import" href="../views/static/header.htm">
 <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css"
 	href="../css/font-awesome.min.css">
@@ -24,11 +23,12 @@
 <link rel="stylesheet" type="text/css" href="../css/AdminLTE.css">
 <link rel="stylesheet" type="text/css" href="../css/dashboard.css">
 <link rel="stylesheet" type="text/css" href="../css/custom/overlay.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <script type="text/javascript" src="../js/jquery.min.js"></script>
 </head>
 <body class="skin-blue fixed pace-done sidebar-o"
 	style="min-height: 588px;">
-	<div id="includeHeader"></div>
+	<% include static/header.htm %>
 	<!-- <jsp:include page="static/header.jsp"></jsp:include> -->
 	<div class="overlay connectedSortable hide"></div>
 	<div class="overlay-body connectedSortable hide">
@@ -46,8 +46,8 @@
 					<label class="vertical-align-bottom overlay-header">Post Ad</label>
 				</div>
 				<hr>
-				<form class="navbar-form1" id="submitad" action="submitad.htm"
-					method="POST" enctype="multipart/form-data" onsubmit="validate()">
+				<form class="navbar-form1" id="submitad" action="/postad"
+					method="post">
 
 					<div class="box-body">
 						<div class="fileupload-buttonbar">
@@ -58,7 +58,7 @@
 										<div class="form-group">
 
 											<label>Ad Title :</label> <input type="text"
-												class="form-control validation-field" name="adTitle"
+												class="form-control validation-field" name="title"
 												id="adTitle" placeholder="Enter">
 										</div>
 										<div class="form-group">
@@ -70,7 +70,7 @@
 
 										<div class="form-group">
 											<label>Category</label> <select class="form-control"
-												name="hostType" id="hostType" placeholder="Select JobType">
+												name="category" id="hostType" placeholder="Select JobType">
 												<option value="" disabled selected>Select</option>
 												<option value="${ITEM_BOOKS}">Books</option>
 												<option value="${ITEM_MOTORS}">Cars and Motors</option>
@@ -109,7 +109,7 @@
 
 
 
-								<button type="submit" class="btn btn-primary start" id="submit">
+								<button type="submit" class="btn btn-primary start">
 									<i class="icon-upload icon-white"></i> <span>Submit Ad</span>
 								</button>
 
@@ -148,15 +148,16 @@
 		style="min-height: 268px;">
 
 		<!-- <jsp:include page="leftPanel.htm"></jsp:include> -->
-		<div id="includeLeftPanel"></div>
+		<% include static/leftpanel.htm %>
 		<aside class="right-side"> <section class="content-header">
 		<br />
 		<h1>
-			Jobs &nbsp;&nbsp;&nbsp;&nbsp;
-			<button type="button" class="btn btn-primary open-overlay">Post Ad</button>
-			&nbsp;&nbsp;&nbsp;&nbsp;
-			<button type="button" id="refreshTable" class="btn btn-primary">Refresh
-			</button>
+		<button type="button" class="btn btn-primary open-overlay">Post
+				Ad</button>&nbsp;&nbsp;&nbsp;&nbsp;
+			AdverTrade - Buy & Sell &nbsp;&nbsp;&nbsp;&nbsp;
+			
+			
+			
 		</h1>
 		<div id="message" class="error hide"></div>
 		<ol class="breadcrumb">
@@ -164,7 +165,7 @@
 			<li class="active">Jobs</li>
 		</ol>
 		</section> <section class="content">
-		 <div class="box box-danger" id="loading-example">
+		<div class="box box-danger" id="loading-example">
 			<!-- <div class="box-body no-padding">
 				<div class="row">
 					<div class="col-sm-12">
@@ -197,75 +198,164 @@
 					</div>
 				</div>
 			</div> -->
-			<div class="box-footer"></div>
+			<% include static/header.htm %>
 		</div>
+
 		<div class="row">
-			<div class="col-lg-3 col-xs-6">
-				<!-- small box -->
-				<div class="small-box bg-aqua">
-					<div class="inner">
-						<h3>150</h3>
+			<form id="form1" action="/browse" method="post">
+				<div class="col-lg-3 col-xs-6">
+					<!-- small box -->
+					<div class="small-box bg-aqua">
+						<div class="inner">
+							<h3>150</h3>
 
-						<p>Electronics</p>
-					</div>
-					<div class="icon">
-						<!-- <img src="../img/electronics.jpeg" class="" alt="Logo Image" /> -->
-						<i class="fa fa-clock-o"></i>
-					</div>
-					<a href="#" class="small-box-footer"> More info <i
-						class="fa fa-arrow-circle-right"></i>
-					</a>
-				</div>
-			</div>
-			<div class="col-lg-3 col-xs-6">
-				<!-- small box -->
-				<div class="small-box bg-aqua">
-					<div class="inner">
-						<h3>150</h3>
+							<p>Cars and Motors</p>
+							<input type="hidden" value="Cars and Motors" name="category">
 
-						<p>New Orders</p>
+						</div>
+						<div class="icon">
+							<!-- <img src="../img/electronics.jpeg" class="" alt="Logo Image" /> -->
+							<i class="fa fa-car"></i>
+						</div>
+						<a href="javascript:;" name="category"
+							onclick="document.getElementById('form1').submit();"
+							class="small-box-footer"> More info <i
+							class="fa fa-arrow-circle-right"></i>
+						</a>
 					</div>
-					<div class="icon">
-						<i class="fa fa-shopping-cart"></i>
-					</div>
-					<a href="#" class="small-box-footer"> More info <i
-						class="fa fa-arrow-circle-right"></i>
-					</a>
 				</div>
-			</div>
-			<div class="col-lg-3 col-xs-6">
-				<!-- small box -->
-				<div class="small-box bg-aqua">
-					<div class="inner">
-						<h3>150</h3>
+			</form>
+			<form id="form2" action="/browse" method="post">
+				<div class="col-lg-3 col-xs-6">
+					<!-- small box -->
+					<div class="small-box bg-aqua">
+						<div class="inner">
+							<h3>150</h3>
 
-						<p>New Orders</p>
+							<p>Books</p>
+							<input type="hidden" value="Books" name="category">
+						</div>
+						<div class="icon">
+							<i class="fa fa-book"></i>
+						</div>
+						<a href="javascript:;"
+							onclick="document.getElementById('form2').submit();"
+							class="small-box-footer"> More info <i
+							class="fa fa-arrow-circle-right"></i>
+						</a>
 					</div>
-					<div class="icon">
-						<i class="fa fa-shopping-cart"></i>
-					</div>
-					<a href="#" class="small-box-footer"> More info <i
-						class="fa fa-arrow-circle-right"></i>
-					</a>
 				</div>
-			</div>
-			<div class="col-lg-3 col-xs-6">
-				<!-- small box -->
-				<div class="small-box bg-aqua">
-					<div class="inner">
-						<h3>150</h3>
+			</form>
+			<form id="form3" action="/browse" method="post">
+				<div class="col-lg-3 col-xs-6">
+					<!-- small box -->
+					<div class="small-box bg-aqua">
+						<div class="inner">
+							<h3>150</h3>
 
-						<p>New Orders</p>
+							<p>Electronics</p>
+						</div>
+						<div class="icon">
+							<i class="fa fa-laptop"></i>
+							<input type="hidden" value="Electronics" name="category">
+						</div>
+						<a href="javascript:;"
+							onclick="document.getElementById('form3').submit();"
+							class="small-box-footer"> More info <i
+							class="fa fa-arrow-circle-right"></i>
+						</a>
 					</div>
-					<div class="icon">
-						<i class="fa fa-shopping-cart"></i>
-					</div>
-					<a href="#" class="small-box-footer"> More info <i
-						class="fa fa-arrow-circle-right"></i>
-					</a>
 				</div>
-			</div>
+			</form>
+			<form id="form4" action="/browse" method="post">
+				<div class="col-lg-3 col-xs-6">
+					<!-- small box -->
+					<div class="small-box bg-aqua">
+						<div class="inner">
+							<h3>150</h3>
+
+							<p>Furniture</p>
+						</div>
+						<div class="icon">
+							<i class="fa fa-bed"></i>
+							<input type="hidden" value="Furniture" name="category">
+						</div>
+						<a href="javascript:;"
+							onclick="document.getElementById('form4').submit();"
+							class="small-box-footer"> More info <i
+							class="fa fa-arrow-circle-right"></i>
+						</a>
+					</div>
+				</div>
+			</form>
+			
+			<form id="form5" action="/browse" method="post">
+				<div class="col-lg-3 col-xs-6">
+					<!-- small box -->
+					<div class="small-box bg-aqua">
+						<div class="inner">
+							<h3>150</h3>
+	
+							<p>Sports</p>
+						</div>
+						<div class="icon">
+							<i class="fa fa-futbol-o "></i>
+							<input type="hidden" value="Sports" name="category">
+						</div>
+						<a href="javascript:;"
+							onclick="document.getElementById('form5').submit();"
+							class="small-box-footer"> More info <i
+							class="fa fa-arrow-circle-right"></i>
+						</a>
+					</div>
+				</div>
+			</form>
+			
+			<form id="form6" action="/browse" method="post">
+				<div class="col-lg-3 col-xs-6">
+					<!-- small box -->
+					<div class="small-box bg-aqua">
+						<div class="inner">
+							<h3>150</h3>
+
+							<p>Household</p>
+						</div>
+						<div class="icon">
+							<i class="fa fa-lightbulb-o"></i>
+							<input type="hidden" value="Household" name="category">
+						</div>
+						<a href="javascript:;"
+							onclick="document.getElementById('form6').submit();"
+							class="small-box-footer"> More info <i
+							class="fa fa-arrow-circle-right"></i>
+						</a>
+					</div>
+				</div>
+			</form>
+			
+			<form id="form7" action="/browse" method="post">
+				<div class="col-lg-3 col-xs-6">
+					<!-- small box -->
+					<div class="small-box bg-aqua">
+						<div class="inner">
+							<h3>150</h3>
+
+							<p>Beauty and Accessories</p>
+						</div>
+						<div class="icon">
+							<i class="fa fa-eye"></i>
+							<input type="hidden" value="Beauty and Accessories" name="category">
+						</div>
+						<a href="javascript:;"
+							onclick="document.getElementById('form7').submit();"
+							class="small-box-footer"> More info <i
+							class="fa fa-arrow-circle-right"></i>
+						</a>
+					</div>
+				</div>
+			</form>
 		</div>
+
 		</section> </aside>
 
 	</div>
@@ -286,7 +376,7 @@
 	</div>
 	<!-- Alert Modal end  -->
 
-	<div id="includeFooter"></div>
+	<% include static/footer.htm %>
 
 	<script type="text/javascript" src="../js/bootstrap.min.js"></script>
 	<script type="text/javascript"
