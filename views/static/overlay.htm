@@ -1,10 +1,3 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="ISO-8859-1">
-<title>Insert title here</title>
-</head>
-<body>
 	<div class="overlay connectedSortable hide"></div>
 	<div class="overlay-body connectedSortable hide">
 		<div class="file-name-header adjust-header-text">
@@ -18,13 +11,12 @@
 						data-placement="bottom" title="Close">
 						<i class="fa fa-long-arrow-right"></i>
 					</button>
-					<label class="vertical-align-bottom overlay-header">Post
-						Ad</label>
+					<label class="vertical-align-bottom overlay-header">Post Ad</label>
 				</div>
 				<hr>
-				<form class="navbar-form1" id="submitad" action="submitad.htm"
-					method="POST" enctype="multipart/form-data" onsubmit="validate()">
-
+				<form class="navbar-form1" enctype="multipart/form-data" id="submitad" action="/postad"
+					method="post">
+					<input type="hidden" id="id" name="id"/>
 					<div class="box-body">
 						<div class="fileupload-buttonbar">
 							<div class="col-sm-12">
@@ -34,7 +26,7 @@
 										<div class="form-group">
 
 											<label>Ad Title :</label> <input type="text"
-												class="form-control validation-field" name="adTitle"
+												class="form-control validation-field" name="title"
 												id="adTitle" placeholder="Enter">
 										</div>
 										<div class="form-group">
@@ -46,17 +38,10 @@
 
 										<div class="form-group">
 											<label>Category</label> <select class="form-control"
-												name="hostType" id="hostType" placeholder="Select JobType">
-												<option value="" disabled selected>Select</option>
-												<option value="${ITEM_BOOKS}">Books</option>
-												<option value="${ITEM_MOTORS}">Cars and Motors</option>
-												<option value="${ITEM_ELECTRONICS}">Electronics</option>
-												<option value="${ITEM_FASHION}">Fashion and
-													Accessories</option>
-												<option value="${ITEM_FURNITURE}">Furniture</option>
-												<option value="${ITEM_HOUSEHOLD}">Household</option>
-												<option value="${ITEM_JOBS}">Jobs</option>
-												<option value="${ITEM_SPORTS}">Sports</option>
+												name="category" id="category" placeholder="Select JobType">
+												<% categories.forEach(function(category) { %>
+								            <option value = '<%= category["category"]["name"] %>'><%= category["category"]["name"] %></option> 
+								        <% }); %>
 											</select>
 										</div>
 
@@ -71,7 +56,7 @@
 											<label>Ad Description:</label>
 											<!-- <input type="text" -->
 											<!-- class="form-control" name="jobType" id="jobType" placeholder="Enter"> -->
-											<textarea id="description-field" rows="5" type="text"
+											<textarea id="description" rows="5" type="text"
 												name="description" ng-model="ad.description"
 												placeholder="Enter Description .." ng-maxlength="1500"
 												class="form-control ng-pristine ng-untouched ng-valid ng-valid-maxlength"></textarea>
@@ -85,8 +70,12 @@
 
 
 
-								<button type="submit" class="btn btn-primary start" id="submit">
-									<i class="icon-upload icon-white"></i> <span>Submit Job</span>
+								<button type="submit" class="btn btn-primary start submitOverlay">
+									<i class="icon-upload icon-white"></i> <span>Submit Ad</span>
+								</button>
+								
+								<button type="submit" class="btn btn-primary start editOverlay">
+								<i class="icon-upload icon-white"></i> 	<span>Edit Ad</span>
 								</button>
 
 							</div>
@@ -120,5 +109,3 @@
 		<br />
 
 	</div>
-</body>
-</html>

@@ -28,7 +28,7 @@
 <body class="skin-blue fixed pace-done" style="min-height: 588px;">
 	<% include static/header.htm %>
 	<!-- <jsp:include page="static/header.jsp"></jsp:include> -->
-	
+	<% include static/overlay.htm %>
 	<div class="wrapper row-offcanvas row-offcanvas-left"
 		style="min-height: 268px;">
 
@@ -57,30 +57,33 @@
 										<p>Let us know and we promise we'll do our best to serve
 											you.</p>
 										<br />
-										<div class="form-group has-feedback">
-											<input type="text" name="name" id="name" class="form-control"
-												placeholder="Name" /> <span
-												class="glyphicon glyphicon-user form-control-feedback"></span>
-										</div>
-										<div class="form-group has-feedback">
-											<input type="text" name="email" id="email"
-												class="form-control" placeholder="Email" /> <span
-												class="glyphicon glyphicon-envelope form-control-feedback"></span>
-										</div>
-										<div class="form-group has-feedback">
-											<input type="text" name="subject" id="subject"
-												class="form-control" placeholder="Subject" /> <span
-												class="glyphicon glyphicon-tags form-control-feedback"></span>
-										</div>
-										<div class="form-group has-feedback">
-											<textarea class="form-control" rows="5"
-												placeholder="Message ..."></textarea>
-											<span
-												class="glyphicon glyphicon-pencil form-control-feedback"></span>
-										</div>
-										<button type="button" class="btn bg-maroon btn-block"
-											id="btnEmail">Send</button>
 
+										<form action="mailto:arkamat@indiana.edu" enctype="multipart/form-data" method="post">
+										<input name="action" type="hidden" value="submit">
+											<div class="form-group has-feedback">
+												<input type="text" name="name" id="name"
+													class="form-control" placeholder="Name" /> <span
+													class="glyphicon glyphicon-user form-control-feedback"></span>
+											</div>
+											<div class="form-group has-feedback">
+												<input type="text" name="email" id="email"
+													class="form-control" placeholder="Email" /> <span
+													class="glyphicon glyphicon-envelope form-control-feedback"></span>
+											</div>
+											<div class="form-group has-feedback">
+												<input type="text" name="subject" id="subject"
+													class="form-control" placeholder="Subject" /> <span
+													class="glyphicon glyphicon-tags form-control-feedback"></span>
+											</div>
+											<div class="form-group has-feedback">
+												<textarea class="form-control" rows="5"
+													placeholder="Message ..."></textarea>
+												<span
+													class="glyphicon glyphicon-pencil form-control-feedback"></span>
+											</div>
+											<input type="submit" class="btn bg-maroon btn-block"
+												value="Send Email" id="btnEmail"/>
+										</form>
 									</div>
 								</div>
 							</div>
