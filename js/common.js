@@ -199,6 +199,8 @@ function showPopup(left, overlayDiv){
 }
 
 function hidePopup(){
+	$("button.editOverlay").removeClass("hide");
+	$("button.submitOverlay").removeClass("hide");
 	$(".overlay-body").animate({left:"100%"});
 	$(".overlay").fadeOut();
 	$(".tab-close").fadeOut();

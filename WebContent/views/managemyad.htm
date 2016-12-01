@@ -1,0 +1,234 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html style="min-height: 588px;" class="no-copy-paste">
+
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<link rel="shortcut icon" href="../img/header_logo.jpg">
+<title>Adver</title>
+<meta
+	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+	name="viewport">
+<link rel="import" href="static/header.htm">
+<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css"
+	href="../css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css"
+	href="../css/daterangepicker/daterangepicker-bs3.css" />
+<link rel="stylesheet" type="text/css"
+	href="../css/datatables/dataTables.responsive.css">
+<link rel="stylesheet" type="text/css"
+	href="../css/datatables/dataTables.bootstrap.css">
+<link rel="stylesheet" type="text/css"
+	href="../css/skins/_all-skins.min.css">
+<link rel="stylesheet" type="text/css" href="../css/AdminLTE.css">
+<link rel="stylesheet" type="text/css" href="../css/dashboard.css">
+<link rel="stylesheet" type="text/css" href="../css/custom/overlay.css">
+<script type="text/javascript" src="../js/jquery.min.js"></script>
+</head>
+<body class="skin-blue fixed pace-done sidebar-o"
+	style="min-height: 588px;">
+	<div id="includeHeader"></div>
+	<!-- <jsp:include page="static/header.jsp"></jsp:include> -->
+	<div class="overlay connectedSortable hide"></div>
+	<div class="overlay-body connectedSortable hide">
+		<div class="file-name-header adjust-header-text">
+			<!-- <div class="tab-close">
+				<i class="btn-close fa fa-angle-right"></i>
+			</div> -->
+			<div class="row popup-header-text">
+				<div class="col-md-12">
+					<button id="close"
+						class="btn btn-left btn-primary btn-group btn-action-margin-left info"
+						data-placement="bottom" title="Close">
+						<i class="fa fa-long-arrow-right"></i>
+					</button>
+					<label class="vertical-align-bottom overlay-header">Create
+						Job</label>
+				</div>
+				<hr>
+				<form class="navbar-form1" id="submitad" action="submitad.htm"
+					method="POST" enctype="multipart/form-data" onsubmit="validate()">
+
+					<div class="box-body">
+						<div class="fileupload-buttonbar">
+							<div class="col-sm-12">
+
+								<div class="row">
+									<div class="col-sm-12">
+										<div class="form-group">
+
+											<label>Ad Title :</label> <input type="text"
+												class="form-control validation-field" name="adTitle"
+												id="adTitle" placeholder="Enter">
+										</div>
+										<div class="form-group">
+
+											<label>Price :</label> <input type="text"
+												class="form-control validation-field" name="price"
+												id="price" placeholder="Enter">
+										</div>
+
+										<div class="form-group">
+											<label>Category</label> <select class="form-control"
+												name="hostType" id="hostType" placeholder="Select JobType">
+												<option value="" disabled selected>Select</option>
+												<option value="${ITEM_BOOKS}">Books</option>
+												<option value="${ITEM_MOTORS}">Cars and Motors</option>
+												<option value="${ITEM_ELECTRONICS}">Electronics</option>
+												<option value="${ITEM_FASHION}">Fashion and
+													Accessories</option>
+												<option value="${ITEM_FURNITURE}">Furniture</option>
+												<option value="${ITEM_HOUSEHOLD}">Household</option>
+												<option value="${ITEM_JOBS}">Jobs</option>
+												<option value="${ITEM_SPORTS}">Sports</option>
+											</select>
+										</div>
+
+										<div id="uploadimg" class="row">
+											<div class="col-sm-3">
+												<div class="form-group">
+													<input type="file" name="file" />
+												</div>
+											</div>
+										</div>
+										<div class="form-group">
+											<label>Ad Description:</label>
+											<!-- <input type="text" -->
+											<!-- class="form-control" name="jobType" id="jobType" placeholder="Enter"> -->
+											<textarea id="description-field" rows="5" type="text"
+												name="description" ng-model="ad.description"
+												placeholder="Enter Description .." ng-maxlength="1500"
+												class="form-control ng-pristine ng-untouched ng-valid ng-valid-maxlength"></textarea>
+										</div>
+
+										<div class="form-group">
+											<div class="validation-message error hide"></div>
+										</div>
+									</div>
+								</div>
+
+
+
+								<button type="submit" class="btn btn-primary start" id="submit">
+									<i class="icon-upload icon-white"></i> <span>Submit Job</span>
+								</button>
+
+							</div>
+							<br>
+							<div class="fileupload-progress">
+								<div class="box-body no-padding">
+									<div class="bulk-upload-row">
+										<div class="col-sm-12">
+											<div role="presentation" id="fileupload-tables">
+												<div class="files" data-toggle="modal-gallery"
+													data-target="#modal-gallery"></div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+
+						</div>
+					</div>
+
+
+
+
+
+
+				</form>
+			</div>
+			<span id="message"></span>
+		</div>
+		<br />
+
+	</div>
+	<div class="wrapper row-offcanvas row-offcanvas-left"
+		style="min-height: 268px;">
+
+		<!-- <jsp:include page="static/leftPanel.htm"></jsp:include> -->
+		<div id="includeLeftPanel"></div>
+		<aside class="right-side"> <section class="content">
+		<div class="box box-danger" id="loading-example">
+			<div class="box-body no-padding">
+				<div class="row">
+					<div class="col-sm-12">
+						<div class="scroll-right hide"></div>
+						<div class="scroll-left hide"></div>
+						<table id="jobList" class="table table-bordered table-hover">
+							<thead>
+								<tr>
+									<th>Sr.</th>
+									<th>Job Id</th>
+									<th>User Name</th>
+									<th class="hide-column">Queue Type</th>
+									<th class="hide-column">Job Name</th>
+									<th>Session Id</th>
+									<th>Nodes</th>
+									<th>#Processes</th>
+									<th>Host</th>
+									<th>Job Type</th>
+									<th class="hide-column">Memory</th>
+									<th>Time</th>
+									<th>Status</th>
+									<th>Elapsed Time</th>
+									<th>Insert TS</th>
+									<th>Update TS</th>
+									<th>Action</th>
+									<th class="hide-column">Host Id</th>
+								</tr>
+							</thead>
+						</table>
+					</div>
+				</div>
+			</div>
+			<div class="box-footer"></div>
+		</div>
+		</section></aside>
+
+	</div>
+
+	<!-- Modal For Alert-->
+	<div id="alertModal" class="modal fade top-20">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-body">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<div id="alertMsg"></div>
+				</div>
+				<div class="modal-footer">
+					<button id="alertOkBtn" type="button" class="btn btn-primary">OK</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Alert Modal end  -->
+
+	<div id="includeFooter"></div>
+
+	<script type="text/javascript" src="../js/bootstrap.min.js"></script>
+	<script type="text/javascript"
+		src="../js/plugins/daterangepicker/daterangepicker.js"></script>
+	<script type="text/javascript"
+		src="../js/plugins/datatables/jquery.dataTables.js"></script>
+	<script type="text/javascript"
+		src="../js/plugins/datatables/dataTables.responsive.js"></script>
+	<script type="text/javascript"
+		src="../js/plugins/datatables/dataTables.bootstrap.js"></script>
+	<script type="text/javascript"
+		src="../js/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+	<script type="text/javascript" src="../js/AdminLTE/app.js"></script>
+	<script type="text/javascript" src="../js/jquery.confirm.min.js"></script>
+	<script type="text/javascript" src="../js/fnStandingRedraw.js"></script>
+	<script type="text/javascript" src="../js/jquery.blockui.js"></script>
+
+	<script type="text/javascript" src="../js/custom/monitorJob.js"></script>
+	<script type="text/javascript" src="../js/common.js"></script>
+	<script type="text/javascript" src="../js/custom/encrypt.js"></script>
+
+	<script type="text/javascript"
+		src="../js/custom/detectmobilebrowser.js"></script>
+</body>
+</html>

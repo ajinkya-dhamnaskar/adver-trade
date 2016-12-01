@@ -5,16 +5,10 @@ var itemSchema = mongoose.Schema({
 	item : {
 		title : String,
 		price : String,
-		category : String,
+		name : String,
 		description : String,
-		username : [ {
-			type : String,
-			ref : 'User'
-		} ],
-		catId : [ {
-			type : Number,
-			ref : 'Category'
-		} ]
+		username : String
+		
 	}
 });
 
