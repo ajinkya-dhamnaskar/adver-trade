@@ -1,0 +1,126 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html style="min-height: 588px;" class="no-copy-paste">
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<link rel="shortcut icon" href="../img/header_logo.jpg">
+<title>Adver</title>
+<meta
+	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+	name="viewport">
+<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css"
+	href="../css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css"
+	href="../css/daterangepicker/daterangepicker-bs3.css" />
+<link rel="stylesheet" type="text/css"
+	href="../css/datatables/dataTables.responsive.css">
+<link rel="stylesheet" type="text/css"
+	href="../css/datatables/dataTables.bootstrap.css">
+<link rel="stylesheet" type="text/css"
+	href="../css/skins/_all-skins.min.css">
+<link rel="stylesheet" type="text/css" href="../css/AdminLTE.css">
+<link rel="stylesheet" type="text/css" href="../css/dashboard.css">
+<link rel="stylesheet" type="text/css" href="../css/custom/overlay.css">
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js">
+<script type="text/javascript" src="../js/jquery.min.js"></script>
+<script type="text/javascript" src="../js/custom/monitorJob.js"></script>
+<script type="text/javascript" src="//code.jquery.com/jquery-1.12.3.js"></script>
+
+</head>
+
+<body class="skin-blue fixed pace-done sidebar-o"
+	style="min-height: 588px;">
+	<% include static/header.htm %>
+	<!-- <jsp:include page="static/header.jsp"></jsp:include> -->
+	
+	<% include static/overlay.htm %>
+	<div class="wrapper row-offcanvas row-offcanvas-left"
+		style="min-height: 268px;">
+
+		<!-- <jsp:include page="leftPanel.htm"></jsp:include> -->
+		<% include static/leftpanel.htm %>
+		<aside class="right-side"> <section class="content">
+
+		
+		<div class="box box-danger" id="loading-example">
+			<div class="box-body no-padding">
+				<div class="row">
+					<div class="col-sm-12">
+						<div class="scroll-right hide"></div>
+						<div class="scroll-left hide"></div>
+						<table id="itemList" class="table table-bordered table-hover">
+							<thead>
+								<tr>
+									<th>Title</th>
+									<th>Price</th>
+									<th>Category</th>
+									<th>Description</th>
+									<th>User Name</th>
+								</tr>
+							</thead>
+							<% items.forEach(function(item) { %>
+								<tr id='<%= item["_id"] %>'>
+									<td><%= item["item"]["title"] %></td>
+									<td><%= item["item"]["price"] %></td>
+									<td><%= item["item"]["name"] %></td>
+									<td><%= item["item"]["description"] %></td>
+									<td><%= item["item"]["username"] %></td>
+									<td width="5%"><button id="showAdDetails" type="button" class='btn btn-primary info btn-action-margin-left showAdDetails' title='View Details'><i class='fa fa-info-circle'></i></button></td>
+								
+								</tr>
+									<% }); %>
+						</table>
+					</div>
+				</div>
+			</div>
+			<% include static/header.htm %>
+		</div>
+
+		</section> </aside>
+
+	</div>
+
+	<!-- Modal For Alert-->
+	<div id="alertModal" class="modal fade top-20">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-body">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<div id="alertMsg"></div>
+				</div>
+				<div class="modal-footer">
+					<button id="alertOkBtn" type="button" class="btn btn-primary">OK</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Alert Modal end  -->
+
+	<% include static/footer.htm %>
+
+	<script type="text/javascript" src="../js/bootstrap.min.js"></script>
+	<script type="text/javascript"
+		src="../js/plugins/daterangepicker/daterangepicker.js"></script>
+ <script type="text/javascript"
+		src="../js/plugins/datatables/jquery.dataTables.js"></script> 
+	<script type="text/javascript"
+		src="../js/plugins/datatables/dataTables.responsive.js"></script>
+	<script type="text/javascript"
+		src="../js/plugins/datatables/dataTables.bootstrap.js"></script>
+	<script type="text/javascript"
+		src="../js/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+	<script type="text/javascript" src="../js/AdminLTE/app.js"></script>
+	<script type="text/javascript" src="../js/jquery.confirm.min.js"></script>
+	<script type="text/javascript" src="../js/fnStandingRedraw.js"></script>
+	<script type="text/javascript" src="../js/jquery.blockui.js"></script>
+
+	<script type="text/javascript" src="../js/custom/monitorJob.js"></script> 
+	<script type="text/javascript" src="../js/common.js"></script>
+	<script type="text/javascript" src="../js/custom/encrypt.js"></script>
+
+	<script type="text/javascript"
+		src="../js/custom/detectmobilebrowser.js"></script>
+</body>
+</html>
