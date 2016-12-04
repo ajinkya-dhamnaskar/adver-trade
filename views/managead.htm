@@ -55,6 +55,7 @@
 						<table id=itemList class="table table-bordered table-hover">
 							<thead>
 								<tr>
+									<th>Image</th>
 									<th>Title</th>
 									<th>Price</th>
 									<th>Category</th>
@@ -64,6 +65,7 @@
 							</thead>
 							<% items.forEach(function(item) { %>
 								<tr id='<%= item["_id"] %>'>
+								<td class="image-cell"><img class="item-image" src='uploads/<%= item["item"]["imagePath"] %>'></td>
 									<td><%= item["item"]["title"] %></td>
 									<td><%= item["item"]["price"] %></td>
 									<td><%= item["item"]["name"] %></td>

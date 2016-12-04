@@ -5,13 +5,13 @@ async = require("async");
 var path = require('path'), fs = require('fs');
 var ObjectId = require('mongodb').ObjectID
 var mongo = require('mongodb');
-
-module.exports = function(app, passport, server, multer, mongoose, Grid) {
+//var newGrid = require('../models/fsfiles');
+module.exports = function(app, passport, server, multer, mongoose, Grid, conn) {
 
 	// normal routes
 	// ===============================================================
 
-	var conn = mongoose.connection;
+	//var conn = mongoose.connection;
 	Grid.mongo = mongoose.mongo;
 	var storage = multer.diskStorage({
 		destination : function(req, file, callback) {
@@ -25,17 +25,16 @@ module.exports = function(app, passport, server, multer, mongoose, Grid) {
 		storage : storage
 	}).array('file');
 	var gfs;
-	conn.once('open', function() {
-		gfs = Grid(conn.db, mongo);
-		app.set('gridfs', gfs);
-	})
+	gfs = Grid(conn.db, mongo);
+	app.set('gridfs', gfs);
+	
 
 	// process the postad form
 	app.post('/postad', upload, function(request, response) {
-
+		console.log(request)
 		var GridStream = require('gridfs-stream');
-		var mongodb = require('mongodb');
-		var gfs = new GridStream(mongoose.connection, mongodb);
+		//var mongodb = require('mongodb');
+		//var gfs = new GridStream(conn, mongodb);
 		var fs = require('fs');
 		var url = require("url");
 		var newItem = new Item();
@@ -43,27 +42,24 @@ module.exports = function(app, passport, server, multer, mongoose, Grid) {
 		newItem.item.title = request.body.title;
 		newItem.item.price = request.body.price;
 		newItem.item.name = request.body.category;
-
+		
 		newItem.item.username = request.user.local.username;
 		newItem.item.description = request.body.description;
-
-		newItem.save(function(err) {
+		newItem.item.imagePath = request.files[0].filename;
+		newItem.save(function(err, item) {
 			if (err) {
 				throw err;
 			}
-
-			// images are attached
-
-			var writeStream = gfs.createWriteStream({
-				filename : request.files.originalname,
-
-				metadata : {
-					"productTitle" : request.body.title,
-					"sellerID" : request.user.local.email
-				}
-			});
-			fs.createReadStream("" + request.files.path).pipe(writeStream);
-
+//			var writeStream = gfs.createWriteStream({
+//			filename : request.files[0].originalname,
+//
+//				metadata : {
+//					"itemId" : item.id
+//				}
+//			});
+//			
+//			fs.createReadStream("" + request.files[0].path).pipe(writeStream);
+			
 			Category.find({}, function(err, categories) {
 				response.render('monitor.htm', {
 					categories : categories,
@@ -73,7 +69,7 @@ module.exports = function(app, passport, server, multer, mongoose, Grid) {
 			})
 		});
 	});
-	
+
 	app.post('/adDetails', isLoggedIn, function(req, res) {
 		console.log(req.body.id);
 		Category.find({}, function(err, categories) {
@@ -83,38 +79,38 @@ module.exports = function(app, passport, server, multer, mongoose, Grid) {
 
 			function(err, item) {
 				console.log(item);
-				
+
 				User.findOne({
 					'local.username' : item.item.username
 				}, function(err, user) {
-					
-				console.log(user)	
-				res.setHeader('Content-Type', 'application/json');
-				res.send(JSON.stringify({
-					message : "Edited Successfully",
-					username : user.local.username,
-					userfirstname : user.local.firstname,
-					userlastname : user.local.lastname,
-					useremail : user.local.email,
-					userphone : user.local.phone,
-					itemId : ObjectId(req.body.id),
-					itemTitle : item.item.title,
-					itemPrice : item.item.price,
-					itemName : item.item.name,
-					itemDesp : item.item.description,
-					categories : categories,
-					user : req.user.local.username,
-					useremail : req.user.local.username,
-					
-					isErr : false
-				}));
-				res.render('adDetails.htm', {
-					categories : categories,
-					user : req.user.local.username
+
+					console.log(user)
+					res.setHeader('Content-Type', 'application/json');
+					res.send(JSON.stringify({
+						message : "Edited Successfully",
+						username : user.local.username,
+						userfirstname : user.local.firstname,
+						userlastname : user.local.lastname,
+						useremail : user.local.email,
+						userphone : user.local.phone,
+						itemId : ObjectId(req.body.id),
+						itemTitle : item.item.title,
+						itemPrice : item.item.price,
+						itemName : item.item.name,
+						itemDesp : item.item.description,
+						categories : categories,
+						user : req.user.local.username,
+						useremail : req.user.local.username,
+
+						isErr : false
+					}));
+					res.render('adDetails.htm', {
+						categories : categories,
+						user : req.user.local.username
+					});
+
 				});
 
-			});
-				
 			});
 
 		});
@@ -122,12 +118,29 @@ module.exports = function(app, passport, server, multer, mongoose, Grid) {
 
 	// PROFILE SECTION =========================
 	app.get('/monitor', isLoggedIn, function(req, res) {
-
+		// console.log(req)
+		var itemsCount = [];
 		Category.find({}, function(err, categories) {
+			// console.log(categories)
+			
+			var i = 0;
+			categories.forEach(function(category) {
+				Item.count({
+					'item.name' : category["category"]["name"]
+				}, function(err, count) {
+					// console.log(count);
+					itemsCount[category["category"]["name"]] = count;
+					console.log(itemsCount[category["category"]["name"]])
+					
+				})
+				
+			})
 			res.render('monitor.htm', {
 				categories : categories,
-				user : req.user.local.username
+				user : req.user.local.username,
+				itemsCnt : itemsCount
 			});
+
 		});
 
 	});
@@ -163,6 +176,9 @@ module.exports = function(app, passport, server, multer, mongoose, Grid) {
 			}, function(err, items) {
 				res.render('browse.htm', {
 					user : req.user.local.username,
+					userEmail	: req.user.local.email,
+					userName : req.user.local.firstname + " " + req.user.local.lastname,
+					
 					category : req.body.category,
 					items : items,
 					categories : categories
@@ -179,9 +195,11 @@ module.exports = function(app, passport, server, multer, mongoose, Grid) {
 			Item.find({
 				"item.name" : req.body.category
 			}, function(err, items) {
-				//console.log(items);
+				// console.log(items);
 				res.render('browse.htm', {
 					user : req.user.local.username,
+					userEmail	: req.user.local.email,
+					userName : req.user.local.firstname + " " + req.user.local.lastname,
 					category : req.body.category,
 					items : items,
 					categories : categories
@@ -209,6 +227,32 @@ module.exports = function(app, passport, server, multer, mongoose, Grid) {
 		});
 
 	});
+	
+	
+	app.post('/sendEmail', isLoggedIn, function(req, res) {
+		console.log(req.body.id);
+		console.log("\"" + req.body.id + "\"");
+		Category.find({}, function(err, categories) {
+			Item.findOne({
+				'_id' : ObjectId(req.body.id)
+			}, function(err, items) {
+				User.findOne({'local.username' : items.item.username}, function(err, user){
+					
+				console.log(user.local.email);
+				console.log(req.body.message);
+				console.log(items);
+				res.setHeader('Content-Type', 'application/json');
+				res.send(JSON.stringify({
+					message : "Sent Successfully",
+					email	: user.local.email,
+					isErr : false
+				}));
+				
+				})
+			});
+		});
+
+	});
 
 	app.get('/managead', isLoggedIn, function(req, res) {
 		Category.find({}, function(err, categories) {
@@ -232,9 +276,12 @@ module.exports = function(app, passport, server, multer, mongoose, Grid) {
 			Item.find({
 
 			}, function(err, items) {
-				//console.log(items);
+				// console.log(items);
+				
 				res.render('browse.htm', {
 					user : req.user.local.username,
+					userEmail	: req.user.local.email,
+					userName : req.user.local.firstname + " " + req.user.local.lastname,
 					category : req.body.category,
 					items : items,
 					categories : categories
@@ -244,6 +291,9 @@ module.exports = function(app, passport, server, multer, mongoose, Grid) {
 		});
 
 	});
+	
+	
+	
 	app.get('/header', isLoggedIn, function(req, res) {
 		res.render('static/header.htm', {
 			user : req.user.local.username
@@ -251,7 +301,7 @@ module.exports = function(app, passport, server, multer, mongoose, Grid) {
 	});
 
 	app.get('/editAdDB', isLoggedIn, function(req, res) {
-
+		console.log(req);
 		Item.update({
 			_id : req.body.id
 		}, {
@@ -326,14 +376,15 @@ module.exports = function(app, passport, server, multer, mongoose, Grid) {
 		});
 	});
 
-	app.post('/editAdDB', isLoggedIn, function(req, res) {
-
+	app.post('/editAdDB', isLoggedIn, upload, function(req, res) {
+		console.log(req);
 		Item.update({
 			_id : req.body.id
 		}, {
 			'item.title' : req.body.title,
 			'item.price' : req.body.price,
 			'item.name' : req.body.category,
+			'item.imagePath' : req.files[0].filename,
 			'item.description' : req.body.description
 		}, function() {
 			res.redirect("/managead")
@@ -361,8 +412,7 @@ module.exports = function(app, passport, server, multer, mongoose, Grid) {
 					user : req.user.local.username,
 					isErr : false
 				}));
-				
-				
+
 			});
 
 		});
