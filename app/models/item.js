@@ -7,6 +7,7 @@ var itemSchema = mongoose.Schema({
 		price : String,
 		name : String,
 		description : String,
+		imagePath : String,
 		username : String
 		
 	}

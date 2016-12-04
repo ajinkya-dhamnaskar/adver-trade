@@ -55,6 +55,9 @@ var tblColumns = [ {
 
 $(document).ready(function(e) {
 
+//	$("img").hover(function(){
+//		
+//	})
 	$("a.open-overlay").on("click", function() {
 		
 		$("form#submitad").attr("action", "/postad")
@@ -84,8 +87,16 @@ $(document).ready(function(e) {
 //	});
 
 	$("#showAdDetails").on("click", function() {
-		displayPage($(this).closest("tr").attr("id"));
+		
+		id = $(this).closest("tr").attr("id");
+		$("#alertModal").modal();
+		$(".sendEmail").on("click", function() {
+			sendEmail(id, $(".message").val());
+
+		});
 	});
+	
+	
 	
 	$(".deleteAd").on("click", function() {
 		deleteAd($(this).closest("tr"));
@@ -200,6 +211,29 @@ function displayPage(id){
 			$("#userphone").val(data.userphone);
 			$("#userfullname").val(data.userfirstname + " " + data.userlastname);
 			
+		}
+
+	});
+	
+}
+
+function sendEmail(id, message){
+	console.log(id);
+	$.ajax({
+		url : '/sendEmail',
+		type : 'POST',
+		data : {
+			id : id,
+			message : message
+		},
+		dataType : 'json',
+		contentType : 'application/x-www-form-urlencoded; charset=utf-8',
+		mimeType : 'application/json',
+		error : function(xhr, textStatus, thrownError) {
+			unblockUI();
+		},
+		success : function(data) {
+			console.log(data);			
 		}
 
 	});

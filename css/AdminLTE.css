@@ -4493,6 +4493,34 @@ table.text-center, table.text-center td, table.text-center th {
 	filter: alpha(opacity = 100)
 }
 
+td {
+	vertical-align: middle !important;
+}
+
+.item-image{
+	height: 70px;
+	width : 100px;
+}
+.image-cell{
+	text-align: center;
+	padding: 0px
+}
+
+table img:hover{
+	
+    -moz-transform: scale(4);
+    -webkit-transform: scale(4);
+    -o-transform: scale(4);
+    -ms-transform: scale(4);
+    -webkit-transform: scale(4);
+    transform: scale(4);
+
+    -webkit-transition: transform 1.05s ease-in-out;
+    -moz-transition:transform 1.05s ease-in-out;
+    -ms-transition:transform 1.05s ease-in-out;
+    z-index: 999999 !important;
+	position: absolute;
+}
 @media print {
 	.no-print, .main-sidebar, .left-side, .main-header, .content-header {
 		display: none !important

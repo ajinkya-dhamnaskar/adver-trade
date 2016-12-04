@@ -89,14 +89,15 @@
 
 		<div class="row">
 		<% categories.forEach(function(category) { %>
+		
 			<form id='<%= category["category"]["name"] %>' action="/browse" method="post">
 				<div class="col-lg-3 col-xs-6">
 					<!-- small box -->
 					<div class="small-box bg-aqua">
 						<div class="inner">
-							<h3>150</h3>
+							<h3>  </h3>
 
-							<p><%= category["category"]["name"] %></p>
+							<h4><%= category["category"]["name"] %></h4>
 							<input type="hidden" value='<%= category["category"]["name"] %>' name='category'>
 
 						</div>
@@ -112,8 +113,8 @@
 					</div>
 				</div>
 			</form>
-			<% }); %>
 			
+			<% }); %>
 		</div>
 
 		</section> </aside>

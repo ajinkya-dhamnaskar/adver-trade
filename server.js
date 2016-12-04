@@ -15,9 +15,43 @@ var morgan = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
-
 var configDB = require('./config/database.js');
-mongoose.connect(configDB.url); 
+var db = mongoose.connect(configDB.url);
+var conn = mongoose.createConnection(configDB.url);	
+var Category = require('./app/models/category.js');	
+conn.on('open', function () {
+    conn.db.listCollections({name: "categories"})
+    .next(function(err, collinfo) {
+        if (!collinfo) {
+
+        	Category.insertMany([ {
+        	    'category.ID': 1, 'category.name': "Cars and Motors",  'category.image': "fa fa-car"
+        	 },
+        	 {
+        		   'category.ID': 2, 'category.name': "Books", 'category.image': "fa fa-book"
+        	 },
+        	 {
+        		   'category.ID': 3, 'category.name': "Electronics", 'category.image': "fa fa-laptop"
+        	 },
+        	 {
+        		   'category.ID': 4, 'category.name': "Furniture", 'category.image': "fa fa-bed"
+        	 },
+        	 {
+        		   'category.ID': 5, 'category.name': "Sportssss", 'category.image': "fa fa-futbol-o"
+        	 },
+        	 {
+        		   'category.ID': 6, 'category.name': "Household", 'category.image': "fa fa-lightbulb-o"
+        	 },
+        	 {
+        		   'category.ID': 7, 'category.name': "Data and Accessories", 'category.image': "fa fa-eye"
+        	 }
+        	 
+        	 ]);
+        }
+        
+    });
+});
+ 
 
 var http = require('http');
 var fs = require('fs');
@@ -100,33 +134,22 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
-var Category = require('./app/models/category.js');	
 
-Category.insertMany([ {
-    'category.ID': 1, 'category.name': "Cars and Motors",  'category.image': "fa fa-car"
- },
- {
-	   'category.ID': 2, 'category.name': "Books", 'category.image': "fa fa-book"
- },
- {
-	   'category.ID': 3, 'category.name': "Electronics", 'category.image': "fa fa-laptop"
- },
- {
-	   'category.ID': 4, 'category.name': "Furniture", 'category.image': "fa fa-bed"
- },
- {
-	   'category.ID': 5, 'category.name': "Sportssss", 'category.image': "fa fa-futbol-o"
- },
- {
-	   'category.ID': 6, 'category.name': "Household", 'category.image': "fa fa-lightbulb-o"
- },
- {
-	   'category.ID': 7, 'category.name': "Data and Accessories", 'category.image': "fa fa-eye"
- }
- 
- ]);
 
-require('./app/routes.js')(app, passport, server, multer, mongoose, Grid);
+
+
+
+
+
+//var collectionExists = configDB.collectionExists("Category");
+//if (collectionExists == false) {
+
+
+//}
+
+
+
+require('./app/routes.js')(app, passport, server, multer, mongoose, Grid, conn);
 
 // launch ======================================================================
 // app.listen(port);
