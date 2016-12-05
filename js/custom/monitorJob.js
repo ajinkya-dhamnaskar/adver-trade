@@ -56,13 +56,13 @@ var tblColumns = [ {
 $(document).ready(function(e) {
 
 //	$("img").hover(function(){
-//		
+//
 //	})
 	$("a.open-overlay").on("click", function() {
-		
+
 		$("form#submitad").attr("action", "/postad")
 		$(".overlay-header").text("Post Ad");
-		
+
 		$("#price").val("");
 		$("#adTitle").val("");
 		$("#description").val("");
@@ -70,7 +70,7 @@ $(document).ready(function(e) {
 		showPopup();
 		$(".validation-message").addClass("hide");
 	});
-	
+
 	$("button.open-overlay").on("click", function() {
 		$("form#submitad").attr("action", "/editAdDB")
 		$(".overlay-header").text("Edit Ad");
@@ -78,31 +78,31 @@ $(document).ready(function(e) {
 		showPopup();
 		$(".validation-message").addClass("hide");
 	});
-	
-	
 
-//	
+
+
+//
 //	$("#alertOkBtn").on("click", function() {
 //		$("button#deleteAd").trigger("click");
 //	});
 
 	$("#showAdDetails").on("click", function() {
-		
+
 		id = $(this).closest("tr").attr("id");
 		$("#alertModal").modal();
 		$(".sendEmail").on("click", function() {
 			sendEmail(id, $(".message").val());
-
+			$("#alertModal").modal("hide");
 		});
 	});
-	
-	
-	
+
+
+
 	$(".deleteAd").on("click", function() {
 		deleteAd($(this).closest("tr"));
 
 	});
-	
+
 	$(".editAd").on("click", function() {
 		updateAd($(this).closest("tr").attr("id"));
 
@@ -156,7 +156,7 @@ function deleteAd(deleteTR) {
 
 		});
 	}
-	
+
 }
 
 function updateAd(id) {
@@ -177,7 +177,7 @@ function updateAd(id) {
 		success : function(data) {
 			console.log(data);
 			$("#price").val(data.itemPrice);
-			$("#adTitle").val(data.itemTitle);
+			$("#s").val(data.itemTitle);
 			$("#description").val(data.itemDesp);
 			$("#category").val(data.itemName);
 		}
@@ -210,11 +210,11 @@ function displayPage(id){
 			$("#useremail").val(data.useremail);
 			$("#userphone").val(data.userphone);
 			$("#userfullname").val(data.userfirstname + " " + data.userlastname);
-			
+
 		}
 
 	});
-	
+
 }
 
 function sendEmail(id, message){
@@ -233,10 +233,9 @@ function sendEmail(id, message){
 			unblockUI();
 		},
 		success : function(data) {
-			console.log(data);			
+			console.log(data);
 		}
 
 	});
-	
-}
 
+}
