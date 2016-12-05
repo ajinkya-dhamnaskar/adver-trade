@@ -38,10 +38,6 @@
 		<br />
 		<h1>Contact Us</h1>
 		<div id="message" class="error hide"></div>
-		<ol class="breadcrumb">
-			<li><a href="test.htm"><i class="fa fa-dashboard"></i> Home</a></li>
-			<li class="active">Contact Us</li>
-		</ol>
 		</section> <section class="content">
 		<div class="box box-danger" id="loading-example">
 
@@ -58,16 +54,16 @@
 											you.</p>
 										<br />
 
-										<form action="mailto:arkamat@indiana.edu" enctype="multipart/form-data" method="post">
+										<form action=/contact  method="post">
 										<input name="action" type="hidden" value="submit">
 											<div class="form-group has-feedback">
 												<input type="text" name="name" id="name"
-													class="form-control" placeholder="Name" /> <span
+													class="form-control" placeholder="Name" value=<%= user %> readonly /> <span
 													class="glyphicon glyphicon-user form-control-feedback"></span>
 											</div>
 											<div class="form-group has-feedback">
 												<input type="text" name="email" id="email"
-													class="form-control" placeholder="Email" /> <span
+													class="form-control" placeholder="Email" value=<%= email %> readonly /> <span
 													class="glyphicon glyphicon-envelope form-control-feedback"></span>
 											</div>
 											<div class="form-group has-feedback">
@@ -77,13 +73,17 @@
 											</div>
 											<div class="form-group has-feedback">
 												<textarea class="form-control" rows="5"
-													placeholder="Message ..."></textarea>
+													name="message" id="message" placeholder="Message ..."></textarea>
 												<span
 													class="glyphicon glyphicon-pencil form-control-feedback"></span>
 											</div>
 											<input type="submit" class="btn bg-maroon btn-block"
 												value="Send Email" id="btnEmail"/>
 										</form>
+
+										<% if (message.length > 0) { %>
+                  <p><%= message %></p>
+                  <% } %>
 									</div>
 								</div>
 							</div>

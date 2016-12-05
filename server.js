@@ -10,15 +10,14 @@ var port = process.env.PORT || 8080;
 var mongoose = require('mongoose');
 var passport = require('passport');
 var flash = require('connect-flash');
-var io = require('socket.io');
 var morgan = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 var configDB = require('./config/database.js');
 var db = mongoose.connect(configDB.url);
-var conn = mongoose.createConnection(configDB.url);	
-var Category = require('./app/models/category.js');	
+var conn = mongoose.createConnection(configDB.url);
+var Category = require('./app/models/category.js');
 conn.on('open', function () {
     conn.db.listCollections({name: "categories"})
     .next(function(err, collinfo) {
@@ -45,13 +44,13 @@ conn.on('open', function () {
         	 {
         		   'category.ID': 7, 'category.name': "Data and Accessories", 'category.image': "fa fa-eye"
         	 }
-        	 
+
         	 ]);
         }
-        
+
     });
 });
- 
+
 
 var http = require('http');
 var fs = require('fs');
@@ -83,7 +82,7 @@ var bodyParser   = require('body-parser');
 // console.log("Request for " + pathname + " received.");
 //
 // // Read the requested file content from file system
-// fs.readFile(pathname.substr(1), function(err, data) { 
+// fs.readFile(pathname.substr(1), function(err, data) {
 // if (err) {
 // console.log(err);
 // // HTTP Status: 404 : NOT FOUND
