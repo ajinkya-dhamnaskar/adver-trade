@@ -9,15 +9,15 @@ $(document).ready(function(){
 //		
 //		xhr.setRequestHeader(header,token);
 //	});
-	$(document).delegate(".sidebar-toggle","click",function(e){
-		if($("body").hasClass("sidebar-open")){
-			$("body").addClass("sidebar-collapse");
-			$("body").removeClass("sidebar-open");
-		}else{
-			$("body").removeClass("sidebar-collapse");
-			$("body").addClass("sidebar-open");
-		}
-	});
+//	$(document).delegate(".sidebar-toggle","click",function(e){
+//		if($("body").hasClass("sidebar-open")){
+//			$("body").addClass("sidebar-collapse");
+//			$("body").removeClass("sidebar-open");
+//		}else{
+//			$("body").removeClass("sidebar-collapse");
+//			$("body").addClass("sidebar-open");
+//		}
+//	});
 	//disable copy-paste starts
 	var ctrlDown = false;
     var ctrlKey = 17, vKey = 86, cKey = 67;
