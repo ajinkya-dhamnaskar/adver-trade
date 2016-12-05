@@ -5,6 +5,7 @@ async = require("async");
 var path = require('path'), fs = require('fs');
 var ObjectId = require('mongodb').ObjectID
 var mongo = require('mongodb');
+var nodemailer = require('nodemailer');
 //var newGrid = require('../models/fsfiles');
 module.exports = function(app, passport, server, multer, mongoose, Grid, conn) {
 
@@ -27,7 +28,7 @@ module.exports = function(app, passport, server, multer, mongoose, Grid, conn) {
 	var gfs;
 	gfs = Grid(conn.db, mongo);
 	app.set('gridfs', gfs);
-	
+
 
 	// process the postad form
 	app.post('/postad', upload, function(request, response) {
@@ -42,7 +43,7 @@ module.exports = function(app, passport, server, multer, mongoose, Grid, conn) {
 		newItem.item.title = request.body.title;
 		newItem.item.price = request.body.price;
 		newItem.item.name = request.body.category;
-		
+
 		newItem.item.username = request.user.local.username;
 		newItem.item.description = request.body.description;
 		newItem.item.imagePath = request.files[0].filename;
@@ -57,9 +58,9 @@ module.exports = function(app, passport, server, multer, mongoose, Grid, conn) {
 //					"itemId" : item.id
 //				}
 //			});
-//			
+//
 //			fs.createReadStream("" + request.files[0].path).pipe(writeStream);
-			
+
 			Category.find({}, function(err, categories) {
 				response.render('monitor.htm', {
 					categories : categories,
@@ -122,7 +123,7 @@ module.exports = function(app, passport, server, multer, mongoose, Grid, conn) {
 		var itemsCount = [];
 		Category.find({}, function(err, categories) {
 			// console.log(categories)
-			
+
 			var i = 0;
 			categories.forEach(function(category) {
 				Item.count({
@@ -131,9 +132,9 @@ module.exports = function(app, passport, server, multer, mongoose, Grid, conn) {
 					// console.log(count);
 					itemsCount[category["category"]["name"]] = count;
 					console.log(itemsCount[category["category"]["name"]])
-					
+
 				})
-				
+
 			})
 			res.render('monitor.htm', {
 				categories : categories,
@@ -178,7 +179,7 @@ module.exports = function(app, passport, server, multer, mongoose, Grid, conn) {
 					user : req.user.local.username,
 					userEmail	: req.user.local.email,
 					userName : req.user.local.firstname + " " + req.user.local.lastname,
-					
+
 					category : req.body.category,
 					items : items,
 					categories : categories
@@ -227,27 +228,50 @@ module.exports = function(app, passport, server, multer, mongoose, Grid, conn) {
 		});
 
 	});
-	
-	
+
+
 	app.post('/sendEmail', isLoggedIn, function(req, res) {
-		console.log(req.body.id);
-		console.log("\"" + req.body.id + "\"");
+
+	var sender = req.user.local.username
+
 		Category.find({}, function(err, categories) {
 			Item.findOne({
 				'_id' : ObjectId(req.body.id)
-			}, function(err, items) {
-				User.findOne({'local.username' : items.item.username}, function(err, user){
-					
+			}, function(err, item) {
+				User.findOne({'local.username' : item.item.username}, function(err, user){
 				console.log(user.local.email);
 				console.log(req.body.message);
-				console.log(items);
-				res.setHeader('Content-Type', 'application/json');
-				res.send(JSON.stringify({
-					message : "Sent Successfully",
-					email	: user.local.email,
-					isErr : false
-				}));
-				
+				console.log(item.item.title);
+				// res.setHeader('Content-Type', 'application/json');
+				// res.send(JSON.stringify({
+				// 	message : "Sent Successfully",
+				// 	email	: user.local.email,
+				// 	isErr : false
+				// }));
+
+				var smtpTransport = nodemailer.createTransport('SMTP', {
+					service: 'Gmail',
+					auth: {
+						user: 'advertradeuser@gmail.com',
+						pass: 'adver123'
+					}
+				});
+
+				var mailOptions = {
+					to: user.local.email,
+					from: 'advertradeuser@gmail.com',
+					subject: '[AdverTrade]: Response for your Ad  : Title : '+ item.item.title,
+				  text:	'Sender: ' + sender + '\nSender Message: '+req.body.message  + '\n' +
+					'Item Details :\nTitle:'+ item.item.title+'\n'+ 'Description: '+item.item.description + '\nPrice: '+item.item.price+ '\n\n'+
+					'An e-mail has been sent to you as a reponse to your Ad. Login to AdverTrade to contact back the sender. '+'\n'
+
+				};
+				smtpTransport.sendMail(mailOptions, function(error, info){
+						 if(error){
+							 console.log(error);
+						 }
+			});
+
 				})
 			});
 		});
@@ -277,7 +301,7 @@ module.exports = function(app, passport, server, multer, mongoose, Grid, conn) {
 
 			}, function(err, items) {
 				// console.log(items);
-				
+
 				res.render('browse.htm', {
 					user : req.user.local.username,
 					userEmail	: req.user.local.email,
@@ -291,9 +315,9 @@ module.exports = function(app, passport, server, multer, mongoose, Grid, conn) {
 		});
 
 	});
-	
-	
-	
+
+
+
 	app.get('/header', isLoggedIn, function(req, res) {
 		res.render('static/header.htm', {
 			user : req.user.local.username
@@ -367,14 +391,14 @@ module.exports = function(app, passport, server, multer, mongoose, Grid, conn) {
 		});
 	});
 
-	app.get('/contact', function(req, res) {
-		Category.find({}, function(err, categories) {
-			res.render('contact.htm', {
-				user : req.user.local.username,
-				categories : categories
-			})
-		});
-	});
+	// app.get('/contact', function(req, res) {
+	// 	Category.find({}, function(err, categories) {
+	// 		res.render('contact.htm', {
+	// 			user : req.user.local.username,
+	// 			categories : categories
+	// 		})
+	// 	});
+	// });
 
 	app.post('/editAdDB', isLoggedIn, upload, function(req, res) {
 		console.log(req);
@@ -427,6 +451,51 @@ module.exports = function(app, passport, server, multer, mongoose, Grid, conn) {
 		failureFlash : true
 	}));
 
+	app.get('/contact', isLoggedIn, function(req, res) {
+
+		Category.find({}, function(err, categories) {
+		User.findOne({
+				'local.username' : req.user.local.username
+			}, function(err, user) {
+				res.render('contact.htm', {
+					user : user.local.username,
+					email : user.local.email,
+					message: req.flash('success'),
+					categories : categories
+				});
+			});
+
+		});
+	});
+
+	app.post('/contact',isLoggedIn, function(req, res) {
+		var smtpTransport = nodemailer.createTransport('SMTP', {
+			service: 'Gmail',
+			auth: {
+				user: 'advertradeuser@gmail.com',
+        pass: 'adver123'
+			}
+		});
+
+		var mailOptions = {
+			to: 'advertradeuser@gmail.com',
+			from: req.body.email,
+			subject: 'AdverTrade Contacted by User: '+req.body.name+'::'+req.body.email + ' Message subject : '+ req.body.subject,
+			text: 'User Message: '+req.body.message
+		};
+		smtpTransport.sendMail(mailOptions, function(error, info){
+		     if(error){
+					 	req.flash('success', 'Error in sending email');
+		        res.redirect('/contact');
+		     }
+				 req.flash('success', 'An e-mail has been sent to  us  with your questions. We will contact you back soon.');
+				 res.redirect('/contact');
+	});
+
+
+});
+
+//end
 };
 
 // route middleware to ensure user is logged in
