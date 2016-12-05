@@ -86,7 +86,7 @@ $(document).ready(function(e) {
 //		$("button#deleteAd").trigger("click");
 //	});
 
-	$("#showAdDetails").on("click", function() {
+	$(".showAdDetails").on("click", function() {
 
 		id = $(this).closest("tr").attr("id");
 		$("#alertModal").modal();
@@ -121,8 +121,8 @@ $('#itemList').dataTable({
 		// "bServerSide": true,
 //		"sAjaxSource" : "getJobs.htm",
 		"bPaginate" : true,
-//		"bLengthChange" : true,
-		"iDisplayLength" : 1,
+		"bLengthChange" : true,
+		"iDisplayLength" : 10,
 //	"bFilter" : true,
 //		"aoColumns" : tblColumns,
 
@@ -177,7 +177,7 @@ function updateAd(id) {
 		success : function(data) {
 			console.log(data);
 			$("#price").val(data.itemPrice);
-			$("#s").val(data.itemTitle);
+			$("#adTitle").val(data.itemTitle);
 			$("#description").val(data.itemDesp);
 			$("#category").val(data.itemName);
 		}

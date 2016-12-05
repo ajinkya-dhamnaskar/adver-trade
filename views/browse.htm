@@ -23,10 +23,9 @@
 <link rel="stylesheet" type="text/css" href="../css/dashboard.css">
 <link rel="stylesheet" type="text/css" href="../css/custom/overlay.css">
 
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js">
 <script type="text/javascript" src="../js/jquery.min.js"></script>
+<script type="text/javascript" src="../js/plugins/datatables/jquery.dataTables.js"></script>
 <script type="text/javascript" src="../js/custom/monitorJob.js"></script>
-<script type="text/javascript" src="//code.jquery.com/jquery-1.12.3.js"></script>
 
 </head>
 
@@ -40,7 +39,7 @@
 		style="min-height: 268px;">
 
 		<!-- <jsp:include page="leftPanel.htm"></jsp:include> -->
-		<% include static/leftpanel.htm %>
+		<% include static/leftPanel.htm %>
 		<aside class="right-side"> <section class="content">
 
 		
@@ -58,9 +57,11 @@
 									<th>Price</th>
 									<th>Category</th>
 									<th>Description</th>
-									<th>User Name</th>
+									<th>Seller</th>
+									<th>Action</th>
 								</tr>
 							</thead>
+							 <tbody>
 							<% items.forEach(function(item) { %>
 								<tr id='<%= item["_id"] %>'>
 									<td class="image-cell"><img class="item-image" src='uploads/<%= item["item"]["imagePath"] %>'></td>
@@ -73,6 +74,7 @@
 								
 								</tr>
 									<% }); %>
+							 </tbody>
 						</table>
 					</div>
 				</div>
