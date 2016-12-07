@@ -51,16 +51,6 @@ module.exports = function(app, passport, server, multer, mongoose, Grid, conn) {
 			if (err) {
 				throw err;
 			}
-//			var writeStream = gfs.createWriteStream({
-//			filename : request.files[0].originalname,
-//
-//				metadata : {
-//					"itemId" : item.id
-//				}
-//			});
-//
-//			fs.createReadStream("" + request.files[0].path).pipe(writeStream);
-
 			Category.find({}, function(err, categories) {
 				response.render('monitor.htm', {
 					categories : categories,
@@ -145,30 +135,6 @@ module.exports = function(app, passport, server, multer, mongoose, Grid, conn) {
 		});
 
 	});
-	//
-	// app.post('/browse', isLoggedIn, function(req, res) {
-	// getItems(res);
-	// res.render('browse.htm', {
-	// user : req.user.local.username,
-	// category : req.body.category
-	// });
-	// });
-
-	// app
-	// .post(
-	// '/path/to/api/endpoint',
-	// function(req, res) {
-	// var Model = require('../app/models/item'), datatablesQuery =
-	// require('datatables-query'), params = req.body, query =
-	// datatablesQuery(Model);
-	//
-	// query.run(params).then(function(data) {
-	// res.json(data);
-	// }, function(err) {
-	// res.status(500).json(err);
-	// });
-	// });
-
 	app.post('/browse', isLoggedIn, function(req, res) {
 
 		Category.find({}, function(err, categories) {
@@ -242,13 +208,7 @@ module.exports = function(app, passport, server, multer, mongoose, Grid, conn) {
 				console.log(user.local.email);
 				console.log(req.body.message);
 				console.log(item.item.title);
-				// res.setHeader('Content-Type', 'application/json');
-				// res.send(JSON.stringify({
-				// 	message : "Sent Successfully",
-				// 	email	: user.local.email,
-				// 	isErr : false
-				// }));
-
+				
 				var smtpTransport = nodemailer.createTransport('SMTP', {
 					service: 'Gmail',
 					auth: {
@@ -338,7 +298,6 @@ module.exports = function(app, passport, server, multer, mongoose, Grid, conn) {
 		})
 	});
 
-	// LOGOUT ==============================
 	app.post('/logout', isLoggedIn, function(req, res) {
 		req.logout();
 		res.render('login.htm', {
@@ -346,15 +305,6 @@ module.exports = function(app, passport, server, multer, mongoose, Grid, conn) {
 		});
 	});
 
-	// =============================================================================
-	// AUTHENTICATE (FIRST LOGIN)
-	// ==================================================
-	// =============================================================================
-
-	// locally --------------------------------
-	// LOGIN ===============================
-	// show the login form
-	// console.log("in login")
 	app.get('/', function(req, res) {
 		res.render('login.htm', {
 			message : req.flash('message')
@@ -390,16 +340,7 @@ module.exports = function(app, passport, server, multer, mongoose, Grid, conn) {
 			})
 		});
 	});
-
-	// app.get('/contact', function(req, res) {
-	// 	Category.find({}, function(err, categories) {
-	// 		res.render('contact.htm', {
-	// 			user : req.user.local.username,
-	// 			categories : categories
-	// 		})
-	// 	});
-	// });
-
+	
 	app.post('/editAdDB', isLoggedIn, upload, function(req, res) {
 		console.log(req);
 		Item.update({

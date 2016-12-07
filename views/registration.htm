@@ -29,34 +29,34 @@
 
     <form id="registration-form" name="registration-form" action="/registration" method="post">
       <div class="form-group has-feedback">
-        <input type="text" id="fName" name="firstname" class="form-control" placeholder="First Name" >
+        <input type="text" id="fName" name="firstname" class="form-control" placeholder="First Name (atleast 3 characters long)" required pattern=".{3,}">
         <span class="glyphicon glyphicon-user form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">
-        <input type="text" id="lName" name="lastname" class="form-control" placeholder="Last Name" >
+        <input type="text" id="lName" name="lastname" class="form-control" placeholder="Last Name (atleast 3 characters long)" required pattern=".{3,}">
         <span class="glyphicon glyphicon-user form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">
-        <input type="text" id="username" name="username" class="form-control" placehold	er="User Name" >
+        <input type="text" id="username" name="username" class="form-control" placeholder="User Name (atleast 3 characters long)" required pattern=".{3,}">
         <span class="glyphicon glyphicon-user form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">
-        <input type="text" id="email" name="email" class="form-control" placeholder="Email" >
+        <input type="text" id="email" name="email" class="form-control" placeholder="Email (enter valid email id)" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">
-        <input type="text" data-format="+1 (ddd) ddd-dddd" id="phone" name="phone" class="form-control" placeholder="Phone" >
+        <input type="text" data-format="+1 (ddd) ddd-dddd" id="phone" name="phone" class="form-control" placeholder="Phone (enter valid phone number)" required pattern="[0-9]{10}">
         <span class="glyphicon glyphicon-earphone form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">
-        <input type="password" id="password" name="password" class="form-control" placeholder="Password" >
+        <input type="password" id="password" name="password" class="form-control" placeholder="Password (atleast one uppercase and lowercase letter)" required pattern="(?=.*[a-z])(?=.*[A-Z]).{3,}">
         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">
-        <input type="password" id="passwordR" class="form-control" placeholder="Confirm password" >
+        <input type="password" id="passwordR" class="form-control" placeholder="Confirm password" required>
         <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
       </div>
-     <!-- <p id="error" style="width: 200px;color: red">${error}</p>  --> 
+     <p id="error" style="width: 200px;color: red"></p>  
       <div class="row">
         <!-- /.col -->
         <div class="col-xs-12">

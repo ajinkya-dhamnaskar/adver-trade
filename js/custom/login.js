@@ -22,12 +22,4 @@ $(function(){
 	});
 
 	$('#username').focus();
-
-//	if(msg == "597"){
-//		errornotice.html("Invalid Username or Password.");
-//		errornotice.fadeIn(750);
-//	} else if(msg == '596'){
-//		errornotice.html("Your Session has expired.");
-//		errornotice.fadeIn(750);
-//	}
 });
