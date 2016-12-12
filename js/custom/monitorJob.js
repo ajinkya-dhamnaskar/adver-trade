@@ -61,6 +61,7 @@ $(document).ready(function(e) {
 	$("a.open-overlay").on("click", function() {
 
 		$("form#submitad").attr("action", "/postad")
+		$("#file").prop('required',true);
 		$(".overlay-header").text("Post Ad");
 
 		$("#price").val("");
