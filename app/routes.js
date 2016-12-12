@@ -108,7 +108,7 @@ module.exports = function(app, passport, server, multer, mongoose, Grid, conn) {
 		Category.find({}, function(err, categories) {
 
 			categories.forEach(function(category) {
-			
+
 
 			})
 			res.render('monitor.htm', {
@@ -452,10 +452,10 @@ module.exports = function(app, passport, server, multer, mongoose, Grid, conn) {
 						var mailOptions = {
 							to : 'advertradeuser@gmail.com',
 							from : req.body.email,
-							subject : 'AdverTrade Contacted by User: '
-									+ req.body.name + '::' + req.body.email
-									+ ' Message subject : ' + req.body.subject,
-							text : 'User Message: ' + req.body.message
+							subject : '[AdverTrade Contacted by]: '
+									+ req.body.name + '--'
+									+ ' [Message subject]: ' + req.body.subject,
+							text : ' User ' + req.body.name + '\n User Email:  ' + req.body.email + '\n User Message: ' + req.body.message
 						};
 						smtpTransport
 								.sendMail(
