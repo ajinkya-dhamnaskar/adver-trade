@@ -30,7 +30,7 @@ conn.on('open', function () {
         		   'category.ID': 4, 'category.name': "Furniture", 'category.image': "fa fa-bed"
         	 },
         	 {
-        		   'category.ID': 5, 'category.name': "Sportssss", 'category.image': "fa fa-futbol-o"
+        		   'category.ID': 5, 'category.name': "Sports", 'category.image': "fa fa-futbol-o"
         	 },
         	 {
         		   'category.ID': 6, 'category.name': "Household", 'category.image': "fa fa-lightbulb-o"
